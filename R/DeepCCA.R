@@ -1,4 +1,4 @@
-DeepCCA <- function(X,Y,method="DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001, dropout = 0.05, nw=2, python_path=NULL) {
+DeepCCA <- function(X,Y,method="DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001, dropout = 0.05, nw=0, python_path=NULL) {
   # if(is.null(python_path)){
   #   python_path <- reticulate::py_discover_config()$python
   # }

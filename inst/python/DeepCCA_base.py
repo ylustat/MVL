@@ -18,7 +18,7 @@ torch.manual_seed(1)
 if torch.cuda.is_available():
     torch.cuda.manual_seed_all(1)
 
-def Deep_Models(X,Y, method = "DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001, dropout = 0.05, nw=2):
+def Deep_Models(X,Y, method = "DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001, dropout = 0.05, nw=0):
     # pl.seed_everything(1)
     layer_sizes = (1024, 1024, 1024)
     K1 = X.shape[1]
