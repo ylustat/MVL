@@ -23,7 +23,7 @@ from cca_zoo.deep.data import NumpyDataset, check_dataset, get_dataloaders
 import torch
 
 
-def Deep_Models(X,Y, method = "DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001, dropout = 0.05, nw=31):
+def Deep_Models(X,Y, method = "DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001, dropout = 0.05, nw=2):
     seed_everything(12)
     layer_sizes = (1024, 1024, 1024)
     K1 = X.shape[1]
