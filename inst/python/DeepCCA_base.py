@@ -1,20 +1,9 @@
 import numpy as np
-from multiviewdata.torchdatasets import NoisyMNIST, SplitMNIST
-from torch.utils.data import Subset
 from cca_zoo.deep.data import get_dataloaders
 import lightning.pytorch as pl
-# from lightning import seed_everything
-from matplotlib import pyplot as plt
 from cca_zoo.deep import (
-    DCCA,
     DCCAE,
     DVCCA,
-    DCCA_EY,
-    DTCCA,
-    DCCA_NOI,
-    DCCA_SDL,
-    BarlowTwins,
-    VICReg,
     SplitAE,
     architectures,
 )
