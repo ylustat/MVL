@@ -29,6 +29,10 @@ def Deep_Models(X,Y, method = "DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001
     K1 = X.shape[1]
     K2 = Y.shape[1]
 
+    LATENT_DIMS = int(LATENT_DIMS)
+    EPOCHS = int(EPOCHS)
+    nw = int(nw)
+    
     # X = X.astype(np.float32)
     # Y = Y.astype(np.float32)
     # class CustomDataset(torch.utils.data.Dataset):
