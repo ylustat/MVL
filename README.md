@@ -1,2 +1,7 @@
-Install the package using ``` library(devtools)
-install_github("ylustat/scmintMR")```
+Install the package using
+
+```R
+library(devtools)
+install_github("ylustat/MVL")
+```
+
