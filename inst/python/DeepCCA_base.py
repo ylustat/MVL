@@ -3,7 +3,7 @@ from multiviewdata.torchdatasets import NoisyMNIST, SplitMNIST
 from torch.utils.data import Subset
 from cca_zoo.deep.data import get_dataloaders
 import lightning.pytorch as pl
-from lightning import seed_everything
+# from lightning import seed_everything
 from matplotlib import pyplot as plt
 from cca_zoo.deep import (
     DCCA,
@@ -21,10 +21,17 @@ from cca_zoo.deep import (
 from cca_zoo.deep.data import NumpyDataset, check_dataset, get_dataloaders
 
 import torch
+import logging
 
+# configure logging at the root level of Lightning
+logging.getLogger("lightning.pytorch").setLevel(logging.ERROR)
+
+torch.manual_seed(1)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed_all(1)
 
 def Deep_Models(X,Y, method = "DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001, dropout = 0.05, nw=2):
-    seed_everything(12)
+    # pl.seed_everything(1)
     layer_sizes = (1024, 1024, 1024)
     K1 = X.shape[1]
     K2 = Y.shape[1]
@@ -32,18 +39,6 @@ def Deep_Models(X,Y, method = "DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001
     LATENT_DIMS = int(LATENT_DIMS)
     EPOCHS = int(EPOCHS)
     nw = int(nw)
-    
-    # X = X.astype(np.float32)
-    # Y = Y.astype(np.float32)
-    # class CustomDataset(torch.utils.data.Dataset):
-    #     def __init__(self):
-    #         pass
-    #     def __len__(self):
-    #         return 1
-    #     def __getitem__(self, index):
-    #         return {"views": (torch.from_numpy(X),torch.from_numpy(Y))}
-    # custom_dataset = CustomDataset()
-    # train_loader = get_dataloaders(custom_dataset)
 
     custom_dataset = NumpyDataset((X, Y))
     train_loader = get_dataloaders(custom_dataset, num_workers=nw)
@@ -86,10 +81,12 @@ def Deep_Models(X,Y, method = "DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001
         trainer = pl.Trainer(
             max_epochs=EPOCHS,
             enable_checkpointing=False,
-            log_every_n_steps=1,
+            logger=False,
+            deterministic=True,
+            enable_progress_bar=False,
         )
         trainer.fit(dvcca, train_loader)
-        recons = dvcca.recon(train_loader, mle=True)
+        recons = dvcca.recon(train_loader, mle=False)
         return recons
     if method == "DVCCAP":
         encoder_1 = architectures.Encoder(
@@ -144,7 +141,9 @@ def Deep_Models(X,Y, method = "DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001
         trainer = pl.Trainer(
             max_epochs=EPOCHS,
             enable_checkpointing=False,
-            log_every_n_steps=1,
+            logger=False,
+            deterministic=True,
+            enable_progress_bar=False,
         )
         trainer.fit(dvccap, train_loader)
         recons = dvccap.recon(train_loader, mle=True)
@@ -196,7 +195,9 @@ def Deep_Models(X,Y, method = "DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001
         trainer = pl.Trainer(
             max_epochs=EPOCHS,
             enable_checkpointing=False,
-            log_every_n_steps=1,
+            logger=False,
+            deterministic=True,
+            enable_progress_bar=False,
         )
         trainer.fit(dccae, train_loader)
         recons = dccae.recon(train_loader, mle=True)
@@ -231,7 +232,9 @@ def Deep_Models(X,Y, method = "DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001
         trainer = pl.Trainer(
             max_epochs=EPOCHS,
             enable_checkpointing=False,
-            log_every_n_steps=1,
+            logger=False,
+            deterministic=True,
+            enable_progress_bar=False,
         )
         trainer.fit(splitae, train_loader)
         recons = splitae.recon(train_loader, mle=True)
