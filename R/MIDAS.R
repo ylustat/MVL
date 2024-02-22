@@ -1,4 +1,4 @@
-MIDAS <- function(X, training_epochs = 10, seed = 1) {
+MIDAS <- function(X, training_epochs = 30, seed = 1) {
   X_complete <- tryCatch({
     X_conv <- rMIDAS::convert(data.frame(X))
     X_train <- rMIDAS::train(X_conv,

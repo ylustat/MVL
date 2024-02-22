@@ -1,0 +1,11 @@
+#' @export
+variance_component_test <- function(res){
+  Q <- res$QRes %>% lapply(function(x) Reduce("+",x)/length(x))
+  W <- res$WRes %>% lapply(function(x) Reduce("+",x)/length(x))
+  P <- res$PRes %>% lapply(function(x) Reduce("+",x)/length(x))
+
+  p <- mapply(function(q,w) SKAT::Get_Davies_PVal(q, w)$p.value, Q, W, SIMPLIFY = F) %>%
+    unlist()
+  names(p) <- names(gammah)
+  return(p)
+}
