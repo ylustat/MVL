@@ -12,6 +12,13 @@ MIDAS <- function(X, training_epochs = 10, seed = 1) {
   }
   X_complete <- as.matrix(X_complete)
   return(X_complete)
-  return(X)
 }
 
+fillNA <- function(X,X_complete){
+  X[is.na(X)] <- X_complete[is.na(X)]
+  return(X)
+}
+fillmean <- function(X){
+  X[is.na(X)] <- mean(X,na.rm=T)
+  return(X)
+}
