@@ -12,7 +12,7 @@ from cca_zoo.deep.data import NumpyDataset, check_dataset, get_dataloaders
 import torch
 import logging
 
-# logging.getLogger("lightning.pytorch").setLevel(logging.ERROR)
+logging.getLogger("lightning.pytorch").setLevel(logging.ERROR)
 
 torch.manual_seed(1)
 if torch.cuda.is_available():
@@ -71,7 +71,7 @@ def Deep_Models(X,Y, method = "DVCCA", LATENT_DIMS = 2, EPOCHS = 100, lr = 0.001
             enable_checkpointing=False,
             logger=False,
             deterministic=True,
-            # enable_progress_bar=False,
+            enable_progress_bar=False,
         )
         trainer.fit(dvcca, train_loader)
         recons = dvcca.recon(train_loader, mle=False)
