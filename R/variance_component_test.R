@@ -4,8 +4,11 @@ variance_component_test <- function(res){
   W <- res$WRes %>% lapply(function(x) Reduce("+",x)/length(x))
   P <- res$PRes %>% lapply(function(x) Reduce("+",x)/length(x))
 
-  p <- mapply(function(q,w) SKAT::Get_Davies_PVal(q, w)$p.value, Q, W, SIMPLIFY = F) %>%
-    unlist()
+  p <- mapply(function(q,w) {
+    tryCatch({
+      SKAT::Get_Davies_PVal(q, w)$p.value
+    }, Q, W, SIMPLIFY = F) %>%
+      unlist()},silent = TRUE, error = function(x) return(NA))
   names(p) <- names(gammah)
   return(p)
 }
