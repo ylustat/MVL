@@ -7,6 +7,6 @@ variance_component_test <- function(res){
     SKAT::Get_Davies_PVal(q, w)$p.value
   }, Q, W, SIMPLIFY = F) %>%
       unlist()},silent = TRUE, error = function(x) return(NA))
-  names(p) <- names(gammah)
+  names(p) <- names(res$gamma)
   return(p)
 }
